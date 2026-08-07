@@ -320,6 +320,66 @@
     footer p { font-family: var(--px); font-size: 6px; color: var(--tan); letter-spacing: 1px; }
     footer .blink { color: var(--red); animation: blink 1.2s step-end infinite; }
 
+    /* ── MODAL ── */
+    .modal-backdrop {
+      position: fixed; inset: 0; z-index: 1000;
+      background: rgba(26,20,16,0.96);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+    .modal-backdrop.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--dark);
+      border: 3px solid var(--cream);
+      box-shadow: 8px 8px 0 var(--red);
+      width: 90vw; max-width: 1000px;
+      max-height: 90vh;
+      overflow-y: auto;
+      display: flex; flex-direction: column;
+      transform: translateY(20px);
+      transition: transform 0.25s ease;
+    }
+    .modal-backdrop.open .modal { transform: translateY(0); }
+
+    .modal-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 24px 28px 16px;
+      border-bottom: 2px solid var(--mid);
+      position: sticky; top: 0; background: var(--dark); z-index: 1;
+    }
+    .modal-header-text {}
+    .modal-label { font-family: var(--px); font-size: 6px; color: var(--red); letter-spacing: 3px; margin-bottom: 8px; display: block; }
+    .modal-title { font-family: var(--px); font-size: 12px; color: var(--cream); letter-spacing: 1px; line-height: 1.6; }
+    .modal-meta { font-family: var(--vt); font-size: 18px; color: var(--tan); margin-top: 4px; }
+
+    .modal-close {
+      font-family: var(--px); font-size: 10px; color: var(--cream);
+      background: none; border: 2px solid var(--cream); padding: 8px 12px;
+      cursor: pointer; letter-spacing: 1px; flex-shrink: 0; margin-left: 20px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .modal-close:hover { color: var(--red); border-color: var(--red); }
+
+    .modal-gallery {
+      display: flex; flex-direction: column; gap: 0;
+    }
+    .modal-gallery img {
+      width: 100%; display: block;
+      border-bottom: 2px solid var(--mid);
+    }
+
+    .modal-body { padding: 24px 28px; }
+    .modal-body p { font-family: var(--vt); font-size: 21px; color: var(--tan); line-height: 1.6; margin-bottom: 14px; }
+    .modal-body p strong { color: var(--cream); }
+    .modal-body ul { list-style: none; padding: 0; margin: 16px 0; }
+    .modal-body ul li {
+      font-family: var(--vt); font-size: 20px; color: var(--tan);
+      padding: 6px 0 6px 20px; position: relative; border-bottom: 1px solid var(--mid);
+    }
+    .modal-body ul li::before { content: '▸'; color: var(--red); position: absolute; left: 0; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 860px) {
       nav { padding: 12px 20px; }
@@ -371,22 +431,9 @@
   <div class="projects-grid">
 
     <!-- 01 Reservoir Village -->
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('modal-01')" style="cursor:pointer;">
       <div class="project-img">
-        <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="270" fill="#2E2519"/>
-          <!-- Tower blocks -->
-          <rect x="40" y="60" width="60" height="180" fill="#1A1410" stroke="#3A3020" stroke-width="1.5"/>
-          <rect x="115" y="30" width="75" height="210" fill="#1A1410" stroke="#3A3020" stroke-width="1.5"/>
-          <rect x="205" y="50" width="65" height="190" fill="#1A1410" stroke="#3A3020" stroke-width="1.5"/>
-          <rect x="285" y="80" width="55" height="160" fill="#1A1410" stroke="#3A3020" stroke-width="1.5"/>
-          <rect x="355" y="40" width="85" height="200" fill="#1A1410" stroke="#3A3020" stroke-width="1.5"/>
-          <!-- Windows -->
-          <rect x="50" y="75" width="12" height="12" fill="#D92B2B" opacity="0.9"/>
-          <rect x="70" y="75" width="12" height="12" fill="#C8B89A" opacity="0.4"/>
-          <rect x="50" y="100" width="12" height="12" fill="#C8B89A" opacity="0.4"/>
-          <rect x="70" y="100" width="12" height="12" fill="#D92B2B" opacity="0.7"/>
-          <rect x="50" y="125" width="12" height="12" fill="#C8B89A" opacity="0.3"/>
+        <img src="reservoir01-1.jpg" alt="Reservoir Village" style="width:100%;height:100%;object-fit:cover;" />
           <rect x="70" y="125" width="12" height="12" fill="#C8B89A" opacity="0.5"/>
           <rect x="125" y="45" width="12" height="12" fill="#D92B2B" opacity="0.9"/>
           <rect x="148" y="45" width="12" height="12" fill="#C8B89A" opacity="0.4"/>
@@ -403,15 +450,7 @@
           <rect x="365" y="55" width="14" height="14" fill="#D92B2B" opacity="0.9"/>
           <rect x="390" y="55" width="14" height="14" fill="#C8B89A" opacity="0.5"/>
           <rect x="415" y="55" width="14" height="14" fill="#C8B89A" opacity="0.3"/>
-          <rect x="365" y="82" width="14" height="14" fill="#C8B89A" opacity="0.4"/>
-          <rect x="390" y="82" width="14" height="14" fill="#D92B2B" opacity="0.7"/>
-          <!-- Ground red line -->
-          <rect x="0" y="240" width="480" height="3" fill="#D92B2B" opacity="0.6"/>
-          <rect x="0" y="243" width="480" height="27" fill="#1A1410"/>
-          <!-- Street detail -->
-          <rect x="100" y="248" width="280" height="2" fill="#3A3020"/>
-        </svg>
-        <div class="project-overlay"><span>PLUS STUDIO →</span></div>
+        <div class="project-overlay"><span>VIEW PROJECT →</span></div>
       </div>
       <div class="project-info">
         <h3>01 — RESERVOIR VILLAGE</h3>
@@ -420,38 +459,16 @@
         <div class="project-tags">
           <span class="tag">MULTI-RES</span>
           <span class="tag">TOWN PLANNING</span>
-          <span class="tag tag-light">90% TP STAGE</span>
+          <span class="tag tag-light">DESIGN DEVELOPMENT</span>
         </div>
       </div>
     </div>
 
     <!-- 02 Ashfield Quarter -->
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('modal-02')" style="cursor:pointer;">
       <div class="project-img">
-        <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="270" fill="#2E2519"/>
-          <!-- Floor plan grid -->
-          <rect x="30" y="30" width="420" height="210" fill="#1A1410" stroke="#3A3020" stroke-width="1"/>
-          <line x1="30" y1="100" x2="450" y2="100" stroke="#3A3020" stroke-width="1"/>
-          <line x1="30" y1="170" x2="450" y2="170" stroke="#3A3020" stroke-width="1"/>
-          <line x1="170" y1="30" x2="170" y2="240" stroke="#3A3020" stroke-width="1"/>
-          <line x1="310" y1="30" x2="310" y2="240" stroke="#3A3020" stroke-width="1"/>
-          <!-- Filled apartment types -->
-          <rect x="31" y="31" width="138" height="68" fill="#D92B2B" opacity="0.7"/>
-          <rect x="171" y="31" width="138" height="68" fill="#C8B89A" opacity="0.2"/>
-          <rect x="311" y="101" width="138" height="68" fill="#D92B2B" opacity="0.5"/>
-          <rect x="31" y="171" width="138" height="68" fill="#C8B89A" opacity="0.15"/>
-          <rect x="171" y="171" width="278" height="68" fill="#D92B2B" opacity="0.25"/>
-          <rect x="311" y="31" width="138" height="68" fill="#C8B89A" opacity="0.3"/>
-          <!-- Labels -->
-          <text x="100" y="72" font-family="monospace" font-size="10" fill="#F2ECD9" opacity="0.7" text-anchor="middle">2B+2BA</text>
-          <text x="240" y="72" font-family="monospace" font-size="10" fill="#F2ECD9" opacity="0.4" text-anchor="middle">1B+S</text>
-          <text x="380" y="72" font-family="monospace" font-size="10" fill="#F2ECD9" opacity="0.5" text-anchor="middle">3B+2BA</text>
-          <text x="380" y="142" font-family="monospace" font-size="10" fill="#F2ECD9" opacity="0.7" text-anchor="middle">2B+2BA</text>
-          <!-- Red accent -->
-          <rect x="30" y="237" width="420" height="3" fill="#D92B2B" opacity="0.8"/>
-        </svg>
-        <div class="project-overlay"><span>PLUS STUDIO →</span></div>
+        <img src="ashfield01-1.jpg" alt="Ashfield Quarter" style="width:100%;height:100%;object-fit:cover;" />
+        <div class="project-overlay"><span>VIEW PROJECT →</span></div>
       </div>
       <div class="project-info">
         <h3>02 — ASHFIELD QUARTER</h3>
@@ -466,29 +483,10 @@
     </div>
 
     <!-- 03 Brisbane 2050 -->
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('modal-03')" style="cursor:pointer;">
       <div class="project-img">
-        <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="270" fill="#2E2519"/>
-          <!-- Stadium bowl outline -->
-          <ellipse cx="240" cy="155" rx="190" ry="110" fill="none" stroke="#3A3020" stroke-width="2"/>
-          <ellipse cx="240" cy="155" rx="145" ry="82" fill="none" stroke="#3A3020" stroke-width="1.5"/>
-          <ellipse cx="240" cy="155" rx="100" ry="56" fill="#1A1410" stroke="#D92B2B" stroke-width="1.5"/>
-          <!-- Playing field -->
-          <ellipse cx="240" cy="155" rx="78" ry="44" fill="#2E2519"/>
-          <line x1="240" y1="111" x2="240" y2="199" stroke="#3A3020" stroke-width="1"/>
-          <ellipse cx="240" cy="155" rx="20" ry="12" fill="none" stroke="#3A3020" stroke-width="1"/>
-          <!-- Seating tiers -->
-          <ellipse cx="240" cy="155" rx="190" ry="110" fill="none" stroke="#C8B89A" stroke-width="1" opacity="0.3"/>
-          <!-- Roof structure lines -->
-          <line x1="50" y1="155" x2="90" y2="100" stroke="#D92B2B" stroke-width="1.5" opacity="0.7"/>
-          <line x1="430" y1="155" x2="390" y2="100" stroke="#D92B2B" stroke-width="1.5" opacity="0.7"/>
-          <line x1="240" y1="45" x2="240" y2="75" stroke="#D92B2B" stroke-width="2" opacity="0.8"/>
-          <!-- Label -->
-          <text x="240" y="30" font-family="monospace" font-size="9" fill="#D92B2B" text-anchor="middle" opacity="0.9">BRISBANE 2050</text>
-          <rect x="0" y="260" width="480" height="10" fill="#D92B2B" opacity="0.4"/>
-        </svg>
-        <div class="project-overlay"><span>HKS →</span></div>
+        <img src="brisbane01-2.jpg" alt="Brisbane 2050 Vision" style="width:100%;height:100%;object-fit:cover;" />
+        <div class="project-overlay"><span>VIEW PROJECT →</span></div>
       </div>
       <div class="project-info">
         <h3>03 — BRISBANE 2050 VISION</h3>
@@ -503,41 +501,37 @@
     </div>
 
     <!-- 04 Jayagiri House -->
-    <div class="project-card">
+    <div class="project-card" onclick="openModal('modal-05')" style="cursor:pointer;"
       <div class="project-img">
-        <svg viewBox="0 0 480 270" xmlns="http://www.w3.org/2000/svg">
-          <rect width="480" height="270" fill="#2E2519"/>
-          <!-- House form – Balinese minimalist -->
-          <rect x="80" y="140" width="320" height="100" fill="#1A1410" stroke="#C8B89A" stroke-width="1.5"/>
-          <!-- Upper storey -->
-          <rect x="120" y="70" width="240" height="70" fill="#1A1410" stroke="#C8B89A" stroke-width="1.5"/>
-          <!-- Overhanging roof -->
-          <polygon points="100,70 380,70 360,50 120,50" fill="#2E2519" stroke="#D92B2B" stroke-width="1.5"/>
-          <polygon points="80,140 400,140 380,120 100,120" fill="#2E2519" stroke="#D92B2B" stroke-width="1"/>
-          <!-- Windows -->
-          <rect x="150" y="85" width="40" height="40" fill="none" stroke="#D92B2B" stroke-width="2"/>
-          <rect x="220" y="85" width="40" height="40" fill="none" stroke="#C8B89A" stroke-width="1.5" opacity="0.5"/>
-          <rect x="290" y="85" width="40" height="40" fill="none" stroke="#D92B2B" stroke-width="2"/>
-          <!-- Ground level openings -->
-          <rect x="110" y="160" width="50" height="60" fill="#D92B2B" opacity="0.15" stroke="#C8B89A" stroke-width="1"/>
-          <rect x="215" y="160" width="50" height="80" fill="#D92B2B" opacity="0.2" stroke="#D92B2B" stroke-width="1.5"/>
-          <rect x="320" y="160" width="50" height="60" fill="#D92B2B" opacity="0.15" stroke="#C8B89A" stroke-width="1"/>
-          <!-- Vegetation hint -->
-          <rect x="20" y="180" width="40" height="60" fill="#2E2519" stroke="#3A3020" stroke-width="1"/>
-          <rect x="420" y="180" width="40" height="60" fill="#2E2519" stroke="#3A3020" stroke-width="1"/>
-          <rect x="0" y="240" width="480" height="30" fill="#1A1410"/>
-          <rect x="0" y="240" width="480" height="2" fill="#D92B2B" opacity="0.5"/>
-        </svg>
+        <img src="jayagiri01-1.jpg" alt="Jayagiri House" style="width:100%;height:100%;object-fit:cover;display:block;" />
         <div class="project-overlay"><span>SHL ASIA →</span></div>
       </div>
       <div class="project-info">
-        <h3>05 — JAYAGIRI HOUSE</h3>
+        <h3>04 — JAYAGIRI HOUSE</h3>
         <div class="project-meta">SHL ASIA · 2020–2021 · BALI, INDONESIA</div>
         <p>2-storey residence blending Balinese tradition with minimalist design. Independently led concept to documentation — architecture, interior, landscape, and client presentations.</p>
         <div class="project-tags">
           <span class="tag">RESIDENTIAL</span>
           <span class="tag">INTERIOR</span>
-          <span class="tag tag-light">100% COMPLETE</span>
+          <span class="tag tag-light">CONSTRUCTION COMPLETED</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 Hung Vuong Stadium -->
+    <div class="project-card" onclick="openModal('modal-06')" style="cursor:pointer;">
+      <div class="project-img">
+        <img src="hv01-1.jpg" alt="Hung Vuong Stadium" style="width:100%;height:100%;object-fit:cover;display:block;" />
+        <div class="project-overlay"><span>HKS →</span></div>
+      </div>
+      <div class="project-info">
+        <h3>05 — HUNG VUONG STADIUM</h3>
+        <div class="project-meta">HKS · 2024–PRESENT · HANOI, VIETNAM</div>
+        <p>World's largest stadium at 135,000-seat capacity. Contributing to concept design, feasibility, and documentation for this landmark national sports infrastructure project.</p>
+        <div class="project-tags">
+          <span class="tag">SPORTS</span>
+          <span class="tag">CIVIC</span>
+          <span class="tag tag-light">CONSTRUCTION ONGOING</span>
         </div>
       </div>
     </div>
@@ -622,7 +616,7 @@
         <div class="edu-dot"></div>
         <div class="edu-detail">
           <div class="deg">SUPER STUDIO MENTOR — SONA (2025–2026)</div>
-          <div class="uni">AIA students national design competition.</div>
+          <div class="uni">AIA national students design competition.</div>
         </div>
       </div>
       <div class="edu-item">
@@ -672,12 +666,6 @@
 
   <div class="cs-cards">
     <div class="cs-card">
-      <div class="cs-card-title">HUNG VUONG STADIUM</div>
-      <div class="cs-card-loc">Hanoi, Vietnam — HKS</div>
-      <div class="cs-card-status">135,000 SEAT CAPACITY · WORLD'S LARGEST</div>
-      <div class="progress-bar"><div class="progress-fill" style="width:20%"></div></div>
-    </div>
-    <div class="cs-card">
       <div class="cs-card-title">PVF STADIUM</div>
       <div class="cs-card-loc">Vietnam — HKS</div>
       <div class="cs-card-status">TECHNICAL ADVISORY · IN PROGRESS</div>
@@ -685,7 +673,7 @@
     </div>
     <div class="cs-card">
       <div class="cs-card-title">MORE COMING SOON</div>
-      <div class="cs-card-loc">Melbourne / Naarm</div>
+      <div class="cs-card-loc">Auckland — Te Toangoroa</div>
       <div class="cs-card-status">STAY TUNED</div>
       <div class="progress-bar"><div class="progress-fill" style="width:5%"></div></div>
     </div>
@@ -705,10 +693,163 @@
   <div class="contact-links">
     <a href="mailto:sherworksspace@gmail.com" class="contact-link">✉ EMAIL</a>
     <a href="https://linkedin.com/in/sherspace88" target="_blank" class="contact-link">▤ LINKEDIN</a>
-    <a href="tel:+61404368873" class="contact-link">✆ CALL</a>
-    <a href="#" class="contact-link" download>↓ DOWNLOAD CV</a>
   </div>
 </section>
+
+<!-- MODALS -->
+
+<!-- Modal 01: Reservoir Village -->
+<div class="modal-backdrop" id="modal-01" onclick="closeOnBackdrop(event, 'modal-01')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <span class="modal-label">// 01 — PLUS STUDIO · 2025–PRESENT</span>
+        <div class="modal-title">RESERVOIR VILLAGE</div>
+        <div class="modal-meta">Multi-Residential · Reservoir, VIC · 90% Town Planning</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-01')">✕ CLOSE</button>
+    </div>
+    <div class="modal-gallery">
+      <img src="reservoir01-1.jpg" alt="Reservoir Village render 1" />
+      <img src="reservoir01-2.jpg" alt="Reservoir Village render 2" />
+      <img src="reservoir01-3.jpg" alt="Reservoir Village render 3" />
+      <img src="reservoir02-1.jpg" alt="Reservoir Village drawing 1" />
+      <img src="reservoir03-1.jpg" alt="Reservoir Village drawing 2" />
+      <img src="reservoir04-1.jpg" alt="Reservoir Village drawing 3" />
+    </div>
+    <div class="modal-body">
+      <p>An urban village centred on <strong>locality and connectivity</strong> in Reservoir, VIC. Recommended by DTP, the OVGA advised improvements to the surrounding urban realm — diagrams I produced contributed to the next stage approval.</p>
+      <ul>
+        <li>Concept & feasibility</li>
+        <li>Material & colour palette</li>
+        <li>Sections & elevations</li>
+        <li>Town planning package</li>
+        <li>3D modelling of 5 building façades & 3 towers</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 02: Ashfield Quarter -->
+<div class="modal-backdrop" id="modal-02" onclick="closeOnBackdrop(event, 'modal-02')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <span class="modal-label">// 02 — PLUS STUDIO · 2026</span>
+        <div class="modal-title">ASHFIELD QUARTER</div>
+        <div class="modal-meta">Multi-Residential · Ashfield, NSW · S4.55 + Tender</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-02')">✕ CLOSE</button>
+    </div>
+    <div class="modal-gallery">
+      <img src="ashfield01-1.jpg" alt="Ashfield Quarter render 1" />
+      <img src="ashfield01-2.jpg" alt="Ashfield Quarter render 2" />
+      <img src="ashfield02-1.jpg" alt="Ashfield Quarter drawing 1" />
+      <img src="ashfield03-1.jpg" alt="Ashfield Quarter drawing 2" />
+      <img src="ashfield04-1.jpg" alt="Ashfield Quarter drawing 3" />
+    </div>
+    <div class="modal-body">
+      <p>240 units across 25+ apartment types including affordable housing. A complex S4.55 modification project that required systematic documentation of a programmatically rich design.</p>
+      <ul>
+        <li>Apartment types & area matrix (GFA, NSA, GBA)</li>
+        <li>Core, services & storage analysis</li>
+        <li>Affordable housing compliance</li>
+        <li>Material schedule & development schedule</li>
+        <li>Full tender package setup</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 03: Brisbane 2050 -->
+<div class="modal-backdrop" id="modal-03" onclick="closeOnBackdrop(event, 'modal-03')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <span class="modal-label">// 03 — HKS · 2024–2025</span>
+        <div class="modal-title">BRISBANE 2050 VISION</div>
+        <div class="modal-meta">Sports & Urban Development · Brisbane, QLD · Bid Proposal</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-03')">✕ CLOSE</button>
+    </div>
+    <div class="modal-gallery">
+      <img src="brisbane01-1.jpg" alt="Brisbane 2050 render 1" />
+      <img src="brisbane01-2.jpg" alt="Brisbane 2050 render 2" />
+      <img src="brisbane03-1.jpg" alt="Brisbane 2050 drawing" />
+    </div>
+    <div class="modal-body">
+      <p>Development of <strong>Northshore Hamilton</strong> — a brownfield site transformed into an Olympic-level stadium precinct for Brisbane 2032. Acted as the bridge between the US HKS team and the AUS Director, translating ideas into drawings across design development and architecture.</p>
+      <ul>
+        <li>Site provision & land acquisition strategy</li>
+        <li>Feasibility & concept development</li>
+        <li>Design overlays and render revisions</li>
+        <li>Full bid & tender package</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 05: Jayagiri House -->
+<div class="modal-backdrop" id="modal-05" onclick="closeOnBackdrop(event, 'modal-05')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <span class="modal-label">// 04 — SHL ASIA · 2020–2021</span>
+        <div class="modal-title">JAYAGIRI HOUSE</div>
+        <div class="modal-meta">Single Residential · Bali, Indonesia · 100% Complete</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-05')">✕ CLOSE</button>
+    </div>
+    <div class="modal-gallery">
+      <img src="jayagiri01-1.jpg" alt="Jayagiri House exterior" />
+      <img src="jayagiri01-2.jpg" alt="Jayagiri House interior" />
+      <img src="jayagiri02-1.jpg" alt="Jayagiri House drawing 1" />
+      <img src="jayagiri-plan.jpg" alt="Jayagiri House floor plan" />
+      <img src="jayagiri03-1.jpg" alt="Jayagiri House drawing 2" />
+    </div>
+    <div class="modal-body">
+      <p>A 2-storey residence blending <strong>Balinese tradition with minimalist design</strong>. Independently presented the concept, securing the contract. Led from concept through to construction documentation.</p>
+      <ul>
+        <li>Concept design — architecture, interior & landscape</li>
+        <li>3D modelling & rendering</li>
+        <li>Client & stakeholder presentations</li>
+        <li>Technical drawings & specifications</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- Modal 06: Hung Vuong Stadium -->
+<div class="modal-backdrop" id="modal-06" onclick="closeOnBackdrop(event, 'modal-06')">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-header-text">
+        <span class="modal-label">// 05 — HKS · 2024–PRESENT</span>
+        <div class="modal-title">HUNG VUONG STADIUM</div>
+        <div class="modal-meta">Sports & Civic · Hanoi, Vietnam · In Progress</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('modal-06')">✕ CLOSE</button>
+    </div>
+    <div class="modal-gallery">
+      <img src="hv01-1.jpg" alt="Hung Vuong Stadium exterior" />
+      <img src="hv-section2.jpg" alt="Hung Vuong Stadium section" />
+      <img src="hv02-1.jpg" alt="Hung Vuong Stadium drawing 1" />
+      <img src="hv03-1.jpg" alt="Hung Vuong Stadium drawing 2" />
+      <img src="hv04-1.jpg" alt="Hung Vuong Stadium drawing 3" />
+      <img src="hv-extra-1.jpg" alt="Hung Vuong Stadium masterplan" />
+      <img src="hv-extra-2.jpg" alt="Hung Vuong Stadium watercolor render" />
+    </div>
+    <div class="modal-body">
+      <p>A landmark national sports infrastructure project set to become the <strong>world's largest stadium</strong> at 135,000-seat capacity. Contributing to concept design, feasibility analysis, and documentation as part of HKS's international team.</p>
+      <ul>
+        <li>Concept design & massing studies</li>
+        <li>Feasibility & capacity analysis</li>
+        <li>3D modelling & visualisation</li>
+        <li>Technical documentation</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -718,6 +859,26 @@
 </footer>
 
 <script>
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function closeOnBackdrop(e, id) {
+    if (e.target === e.currentTarget) closeModal(id);
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-backdrop.open').forEach(m => {
+        m.classList.remove('open');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
   function handleNotify(e) {
     e.preventDefault();
     const input = document.getElementById('notify-email');
